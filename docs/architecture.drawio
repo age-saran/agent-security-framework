@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" version="24.0.0">
   <diagram id="arch" name="System Architecture">
-    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1160" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -9,10 +9,7 @@
           <mxGeometry x="120" y="20" width="1160" height="40" as="geometry" />
         </mxCell>
 
-        <!-- ===== BAND 1: AI RUNTIMES ===== -->
-        <mxCell id="b1" value="AI RUNTIMES" style="text;html=1;fontSize=11;fontStyle=1;align=left;verticalAlign=top;rotation=-90;fontColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="20" y="120" width="120" height="20" as="geometry" />
-        </mxCell>
+        <!-- RUNTIMES -->
         <mxCell id="foundry" value="Azure AI Foundry&#10;(Agent Service · GPT-4o · function calling)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="140" y="90" width="320" height="90" as="geometry" />
         </mxCell>
@@ -23,174 +20,179 @@
           <mxGeometry x="940" y="90" width="320" height="90" as="geometry" />
         </mxCell>
 
-        <!-- ===== BAND 2: INTEGRATION POINTS ===== -->
-        <mxCell id="b2" value="INTEGRATION POINT" style="text;html=1;fontSize=11;fontStyle=1;align=left;verticalAlign=top;rotation=-90;fontColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="10" y="280" width="140" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="int1" value="Wrap tool function&#10;@govern(...) on each tool&#10;(or Foundry middleware — Phase 6)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="140" y="250" width="320" height="90" as="geometry" />
+        <!-- INTEGRATION -->
+        <mxCell id="int1" value="Wrap tool function&#10;@govern(...) on each tool&#10;(Foundry middleware — Phase 6)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="140" y="240" width="320" height="90" as="geometry" />
         </mxCell>
         <mxCell id="int2" value="MCP server tools&#10;@govern on @mcp.tool()&#10;policy runs inside the server" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="540" y="250" width="320" height="90" as="geometry" />
+          <mxGeometry x="540" y="240" width="320" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="int3" value="MCP Gateway (proxy)&#10;intercepts tool calls to&#10;3rd-party servers — Phase 6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="940" y="250" width="320" height="90" as="geometry" />
+        <mxCell id="int3" value="MCP Gateway (proxy)&#10;intercepts calls to&#10;3rd-party servers — Phase 6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="240" width="320" height="90" as="geometry" />
         </mxCell>
 
-        <!-- ===== BAND 3: GOVERNANCE CORE ===== -->
-        <mxCell id="core" value="GOVERNANCE CORE — Phase 1 (built &amp; tested)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#d79b00;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=6;dashed=0;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="140" y="410" width="1120" height="220" as="geometry" />
+        <!-- INPUT BUS -->
+        <mxCell id="bus1" value="Governed tool call  →  context built (tool_name · args · agent.ring)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="140" y="372" width="1120" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="gate" value="govern() gate&#10;build context · audit hook · execute / raise" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="170" y="455" width="260" height="80" as="geometry" />
+
+        <!-- CORE -->
+        <mxCell id="core" value="GOVERNANCE CORE — Phase 1 (built &amp; tested)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#d79b00;fontSize=13;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=6;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="120" y="425" width="1140" height="300" as="geometry" />
         </mxCell>
-        <mxCell id="eval" value="PolicyEvaluator&#10;fail-closed · priority-sorted&#10;&gt;10,000 evals/sec" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="480" y="455" width="260" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="policy" value="Shared Policy (YAML)&#10;governance.toolkit/v1&#10;production.yaml" style="shape=document;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="790" y="450" width="220" height="90" as="geometry" />
-        </mxCell>
-        <mxCell id="backends" value="IPolicyBackend (Protocol)&#10;OPA / Rego / Cedar — pluggable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="480" y="560" width="260" height="50" as="geometry" />
+        <mxCell id="gate" value="govern() gate&#10;build context · audit hook&#10;execute / raise" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="160" y="470" width="250" height="90" as="geometry" />
         </mxCell>
         <mxCell id="exc" value="Governance Exceptions&#10;Denied · StepUpRequired · Deferred" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1040" y="455" width="200" height="80" as="geometry" />
+          <mxGeometry x="160" y="610" width="250" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="eval" value="PolicyEvaluator&#10;fail-closed · priority-sorted&#10;&gt;10,000 evals/sec" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="470" width="270" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="backends" value="IPolicyBackend (Protocol)&#10;OPA / Rego / Cedar — pluggable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="610" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="policy" value="Shared Policy (YAML)&#10;governance.toolkit/v1&#10;production.yaml" style="shape=document;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="860" y="470" width="240" height="95" as="geometry" />
         </mxCell>
 
-        <!-- ===== BAND 4: DECISIONS ===== -->
-        <mxCell id="b4" value="5 DECISIONS" style="text;html=1;fontSize=11;fontStyle=1;align=left;verticalAlign=top;rotation=-90;fontColor=#666666;" vertex="1" parent="1">
-          <mxGeometry x="20" y="690" width="120" height="20" as="geometry" />
+        <!-- DISPATCH BUS -->
+        <mxCell id="bus2" value="PolicyDecision.action  —  routed by govern()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="140" y="765" width="1100" height="30" as="geometry" />
         </mxCell>
+
+        <!-- DECISIONS -->
         <mxCell id="allow" value="ALLOW&#10;execute tool" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="140" y="670" width="210" height="70" as="geometry" />
+          <mxGeometry x="140" y="840" width="200" height="70" as="geometry" />
         </mxCell>
         <mxCell id="deny" value="DENY&#10;raise GovernanceDenied" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="370" y="670" width="210" height="70" as="geometry" />
+          <mxGeometry x="370" y="840" width="200" height="70" as="geometry" />
         </mxCell>
         <mxCell id="modify" value="MODIFY&#10;rewrite params · execute" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="600" y="670" width="210" height="70" as="geometry" />
+          <mxGeometry x="600" y="840" width="200" height="70" as="geometry" />
         </mxCell>
         <mxCell id="stepup" value="STEP_UP&#10;human approval" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="830" y="670" width="210" height="70" as="geometry" />
+          <mxGeometry x="830" y="840" width="200" height="70" as="geometry" />
         </mxCell>
         <mxCell id="defer" value="DEFER&#10;queue for batch review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="1060" y="670" width="180" height="70" as="geometry" />
+          <mxGeometry x="1060" y="840" width="180" height="70" as="geometry" />
         </mxCell>
 
-        <!-- ===== BAND 5: FUTURE INFRA ===== -->
+        <!-- FUTURE INFRA -->
         <mxCell id="infra" value="INFRASTRUCTURE &amp; INTEGRATIONS — Phase 2–6 (planned)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=12;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=6;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="140" y="790" width="1120" height="150" as="geometry" />
+          <mxGeometry x="120" y="960" width="1140" height="160" as="geometry" />
         </mxCell>
         <mxCell id="cosmos" value="Azure Cosmos DB&#10;Merkle-chain audit&#10;(Phase 2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=11;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="170" y="835" width="220" height="80" as="geometry" />
+          <mxGeometry x="160" y="1010" width="220" height="80" as="geometry" />
         </mxCell>
         <mxCell id="teams" value="MS Teams / Outlook&#10;STEP_UP approval&#10;(Phase 4)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=11;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="420" y="835" width="220" height="80" as="geometry" />
+          <mxGeometry x="420" y="1010" width="220" height="80" as="geometry" />
         </mxCell>
         <mxCell id="identity" value="Identity · Trust · Mesh&#10;Ed25519 DID · rings&#10;(Phase 3)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=11;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="670" y="835" width="220" height="80" as="geometry" />
+          <mxGeometry x="690" y="1010" width="220" height="80" as="geometry" />
         </mxCell>
         <mxCell id="sandbox" value="Azure Container Apps&#10;sandbox + SRE&#10;(Phase 5)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=11;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="920" y="835" width="220" height="80" as="geometry" />
+          <mxGeometry x="960" y="1010" width="220" height="80" as="geometry" />
         </mxCell>
 
-        <!-- ===== EDGES ===== -->
-        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="foundry" target="int1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="ccode" target="int2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="cdesk" target="int3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- EDGES: runtime -> integration (straight verticals) -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="foundry" target="int1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ccode" target="int2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="cdesk" target="int3"><mxGeometry relative="1" as="geometry" /></mxCell>
 
-        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="int1" target="gate"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="int2" target="gate"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="int3" target="gate"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- integration -> input bus (straight verticals) -->
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.143;entryY=0;" edge="1" parent="1" source="int1" target="bus1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="int2" target="bus1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.857;entryY=0;" edge="1" parent="1" source="int3" target="bus1"><mxGeometry relative="1" as="geometry" /></mxCell>
 
-        <mxCell id="e7" value="evaluate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="gate" target="eval"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e8" value="loads rules" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;" edge="1" parent="1" source="policy" target="eval"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e9" value="delegate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;" edge="1" parent="1" source="eval" target="backends"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e10" value="raise" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="gate" target="exc"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- input bus -> gate -->
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.125;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="bus1" target="gate"><mxGeometry relative="1" as="geometry" /></mxCell>
 
-        <mxCell id="d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#82b366;" edge="1" parent="1" source="eval" target="allow"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="d2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#b85450;" edge="1" parent="1" source="eval" target="deny"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="d3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#d79b00;" edge="1" parent="1" source="eval" target="modify"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="d4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#d79b00;" edge="1" parent="1" source="eval" target="stepup"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="d5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#d79b00;" edge="1" parent="1" source="eval" target="defer"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- inside core (all short, no crossing) -->
+        <mxCell id="e8" value="evaluate" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="gate" target="eval"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" value="raise" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="gate" target="exc"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="rules" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="policy" target="eval"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" value="delegate" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="eval" target="backends"><mxGeometry relative="1" as="geometry" /></mxCell>
 
-        <mxCell id="f1" value="Phase 4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;strokeColor=#999999;" edge="1" parent="1" source="stepup" target="teams"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="f2" value="Phase 2: log every decision" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;strokeColor=#999999;" edge="1" parent="1" source="gate" target="cosmos"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- eval -> dispatch bus (route out the right side to avoid backends) -->
+        <mxCell id="e12" value="decision" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=1;exitY=0.6;entryX=0.55;entryY=0;" edge="1" parent="1" source="eval" target="bus2"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- dispatch bus -> 5 decisions (straight verticals via staggered exit ports) -->
+        <mxCell id="d1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#82b366;exitX=0.091;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="bus2" target="allow"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#b85450;exitX=0.30;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="bus2" target="deny"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;exitX=0.509;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="bus2" target="modify"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;exitX=0.718;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="bus2" target="stepup"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="d5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;exitX=0.918;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="bus2" target="defer"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- future links -->
+        <mxCell id="f1" value="Phase 4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;dashed=1;strokeColor=#999999;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="stepup" target="teams"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f2" value="Phase 2: log every decision" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;dashed=1;strokeColor=#999999;exitX=0.02;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="bus2" target="cosmos"><mxGeometry relative="1" as="geometry" /></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
 
   <diagram id="flow" name="Governance Decision Flow">
-    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1300" math="0" shadow="0">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="1050" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-
         <mxCell id="ft" value="Governance Decision Flow — per tool call" style="text;html=1;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="240" y="20" width="420" height="30" as="geometry" />
+          <mxGeometry x="280" y="20" width="420" height="30" as="geometry" />
         </mxCell>
-
         <mxCell id="req" value="Agent requests tool call&#10;tool_name + args" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="340" y="70" width="220" height="60" as="geometry" />
+          <mxGeometry x="380" y="70" width="220" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ctx" value="govern(): build context&#10;tool_name · args · agent.ring · input_text · action.type" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="290" y="170" width="320" height="60" as="geometry" />
+          <mxGeometry x="330" y="170" width="320" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ident" value="Identity / Trust gate&#10;(Phase 3 — ring passed in for now)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="300" y="270" width="300" height="50" as="geometry" />
+          <mxGeometry x="340" y="270" width="300" height="50" as="geometry" />
         </mxCell>
         <mxCell id="engine" value="PolicyEvaluator.evaluate()&#10;backends → priority-sorted rules → default" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="300" y="360" width="300" height="60" as="geometry" />
+          <mxGeometry x="340" y="360" width="300" height="60" as="geometry" />
         </mxCell>
         <mxCell id="match" value="Rule matched?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="370" y="460" width="160" height="90" as="geometry" />
+          <mxGeometry x="410" y="460" width="160" height="90" as="geometry" />
         </mxCell>
         <mxCell id="default" value="Apply default&#10;(deny — fail-closed)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="640" y="475" width="200" height="60" as="geometry" />
+          <mxGeometry x="680" y="475" width="200" height="60" as="geometry" />
         </mxCell>
-
         <mxCell id="branch" value="PolicyDecision.action" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="360" y="600" width="180" height="100" as="geometry" />
+          <mxGeometry x="400" y="600" width="180" height="100" as="geometry" />
         </mxCell>
-
         <mxCell id="a_allow" value="ALLOW&#10;execute tool · return result" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="40" y="760" width="160" height="70" as="geometry" />
+          <mxGeometry x="40" y="780" width="160" height="70" as="geometry" />
         </mxCell>
         <mxCell id="a_modify" value="MODIFY&#10;merge modify_params · execute" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="220" y="760" width="160" height="70" as="geometry" />
+          <mxGeometry x="220" y="780" width="160" height="70" as="geometry" />
         </mxCell>
         <mxCell id="a_stepup" value="STEP_UP&#10;handler? → approve → execute&#10;else raise StepUpRequired" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="400" y="755" width="180" height="80" as="geometry" />
+          <mxGeometry x="400" y="775" width="180" height="80" as="geometry" />
         </mxCell>
         <mxCell id="a_defer" value="DEFER&#10;raise Deferred (queue)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="600" y="760" width="150" height="70" as="geometry" />
+          <mxGeometry x="600" y="780" width="150" height="70" as="geometry" />
         </mxCell>
         <mxCell id="a_deny" value="DENY&#10;raise GovernanceDenied" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="770" y="760" width="160" height="70" as="geometry" />
+          <mxGeometry x="780" y="780" width="160" height="70" as="geometry" />
         </mxCell>
-
         <mxCell id="audit" value="Audit log (every decision)&#10;Cosmos DB · Merkle-chain — Phase 2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="300" y="900" width="300" height="60" as="geometry" />
+          <mxGeometry x="340" y="920" width="300" height="60" as="geometry" />
         </mxCell>
-
-        <!-- flow edges -->
-        <mxCell id="fe1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="req" target="ctx"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fe2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="ctx" target="ident"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fe3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="ident" target="engine"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fe4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="engine" target="match"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fe5" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#b85450;" edge="1" parent="1" source="match" target="default"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fe6" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="match" target="branch"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fe7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;" edge="1" parent="1" source="default" target="branch"><mxGeometry relative="1" as="geometry" /></mxCell>
-
-        <mxCell id="be1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#82b366;" edge="1" parent="1" source="branch" target="a_allow"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="be2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#d79b00;" edge="1" parent="1" source="branch" target="a_modify"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="be3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#d79b00;" edge="1" parent="1" source="branch" target="a_stepup"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="be4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#d79b00;" edge="1" parent="1" source="branch" target="a_defer"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="be5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#b85450;" edge="1" parent="1" source="branch" target="a_deny"><mxGeometry relative="1" as="geometry" /></mxCell>
-
-        <mxCell id="ae1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;strokeColor=#999999;" edge="1" parent="1" source="a_allow" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ae2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;strokeColor=#999999;" edge="1" parent="1" source="a_stepup" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ae3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;strokeColor=#999999;" edge="1" parent="1" source="a_deny" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="fe1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="req" target="ctx"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="fe2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ctx" target="ident"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="fe3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ident" target="engine"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="fe4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="engine" target="match"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="fe5" value="no" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#b85450;exitX=1;exitY=0.5;entryX=0.5;entryY=0;" edge="1" parent="1" source="match" target="default"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="fe6" value="yes" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="match" target="branch"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="fe7" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;dashed=1;exitX=0.5;exitY=1;entryX=1;entryY=0.3;" edge="1" parent="1" source="default" target="branch"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="be1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#82b366;exitX=0.2;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="branch" target="a_allow"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="be2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;exitX=0.4;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="branch" target="a_modify"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="be3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="branch" target="a_stepup"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="be4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;exitX=0.6;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="branch" target="a_defer"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="be5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#b85450;exitX=0.8;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="branch" target="a_deny"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ae1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;dashed=1;strokeColor=#999999;exitX=0.5;exitY=1;entryX=0.2;entryY=0;" edge="1" parent="1" source="a_allow" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ae2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;dashed=1;strokeColor=#999999;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="a_stepup" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ae3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;dashed=1;strokeColor=#999999;exitX=0.5;exitY=1;entryX=0.8;entryY=0;" edge="1" parent="1" source="a_deny" target="audit"><mxGeometry relative="1" as="geometry" /></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
