@@ -9,7 +9,7 @@
 
 | Phase | Scope | Priority | Status | Progress |
 |-------|-------|----------|--------|----------|
-| Phase 0 | Project scaffolding | 🔴 Must | ⬜ Not started | 0% |
+| Phase 0 | Project scaffolding | 🔴 Must | ✅ Done | 100% |
 | Phase 1 | Policy Engine + Governance Gate | 🔴 Must | ⬜ Not started | 0% |
 | Phase 2 | Audit (Cosmos DB) + Compliance | 🔴 Must | ⬜ Not started | 0% |
 | Phase 3 | Identity + Trust + Mesh + Subagent | 🔴 Must | ⬜ Not started | 0% |
@@ -23,12 +23,12 @@
 
 ## Phase 0 — Project Scaffolding
 
-- [ ] สร้าง repo structure + `pyproject.toml`
-- [ ] ตั้งค่า virtualenv (Python 3.10+) และติดตั้ง dev deps (pytest, ruff, mypy)
-- [ ] สร้าง `README.md` โครงร่าง
-- [ ] ตั้งค่า pre-commit (lint + format)
-- [ ] วาง `src/agent_security/__init__.py` (เปิด export ทีหลังเมื่อ module พร้อม)
-- [ ] **Verify:** `pip install -e .` ผ่าน, `agsec` entrypoint resolve ได้
+- [x] สร้าง repo structure + `pyproject.toml`
+- [x] ตั้งค่า virtualenv (Python 3.10+) และติดตั้ง dev deps (pytest, ruff, mypy)
+- [x] สร้าง `README.md` โครงร่าง
+- [x] ตั้งค่า pre-commit (lint + format)
+- [x] วาง `src/agent_security/__init__.py` (lazy export ผ่าน PEP 562)
+- [x] **Verify:** `pip install -e .` ผ่าน, `agsec version/doctor` resolve ได้
 
 ---
 
@@ -169,6 +169,7 @@
 | Version | Date | Phase | Change summary | Status | By |
 |---------|------|-------|----------------|--------|-----|
 | v0.1.0 | 2026-06-30 | — | สร้าง checklist จาก implementation_plan v2 | Baseline | มิ้นท์ |
+| v0.1.1 | 2026-06-30 | Phase 0 | scaffold: pyproject, src package, README, pre-commit, agsec stub; verify pip install -e . + agsec ผ่าน | ✅ Done | มิ้นท์ |
 | | | | | | |
 
 **กติกาการอัปเดต version:**
