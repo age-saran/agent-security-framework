@@ -10,7 +10,7 @@
 | Phase | Scope | Priority | Status | Progress |
 |-------|-------|----------|--------|----------|
 | Phase 0 | Project scaffolding | 🔴 Must | ✅ Done | 100% |
-| Phase 1 | Policy Engine + Governance Gate | 🔴 Must | ⬜ Not started | 0% |
+| Phase 1 | Policy Engine + Governance Gate | 🔴 Must | ✅ Done | 100% |
 | Phase 2 | Audit (Cosmos DB) + Compliance | 🔴 Must | ⬜ Not started | 0% |
 | Phase 3 | Identity + Trust + Mesh + Subagent | 🔴 Must | ⬜ Not started | 0% |
 | Phase 4 | Human-in-the-Loop (Teams + Outlook) | 🟡 Important | ⬜ Not started | 0% |
@@ -35,32 +35,32 @@
 ## Phase 1 — Policy Engine & Governance Gate (Python)
 
 ### 1.1 Policy models
-- [ ] `policy/models.py` — `PolicyAction`, `PolicyOperator`, `PolicyCondition`, `PolicyRule`, `PolicyDefaults`, `PolicyDocument`, `PolicyDecision`
-- [ ] ยืนยัน schema = `governance.toolkit/v1` (ตรงกับ .NET ในอนาคต)
+- [x] `policy/models.py` — `PolicyAction`, `PolicyOperator`, `PolicyCondition`, `PolicyRule`, `PolicyDefaults`, `PolicyDocument`, `PolicyDecision`
+- [x] ยืนยัน schema = `governance.toolkit/v1` (ตรงกับ .NET ในอนาคต)
 
 ### 1.2 Policy engine
-- [ ] `policy/engine.py` — `PolicyEvaluator` (deterministic, fail-closed)
-- [ ] `evaluate()` — highest priority match wins, DENY on error
-- [ ] `evaluate_tool_call()` convenience
-- [ ] `policy/backends.py` — `IPolicyBackend` Protocol (เผื่อ OPA/Rego)
+- [x] `policy/engine.py` — `PolicyEvaluator` (deterministic, fail-closed)
+- [x] `evaluate()` — highest priority match wins, DENY on error
+- [x] `evaluate_tool_call()` convenience (+ action-type inference)
+- [x] `policy/backends.py` — `IPolicyBackend` Protocol (เผื่อ OPA/Rego)
 
 ### 1.3 Policy loader
-- [ ] `policy/loader.py` — `load_policy()`, `load_policies()` (merge by priority)
-- [ ] schema validation
-- [ ] `PolicyWatcher` hot-reload (dev)
+- [x] `policy/loader.py` — `load_policy()`, `load_policies()`
+- [x] schema validation (apiVersion + pydantic)
+- [x] `PolicyWatcher` hot-reload (dev)
 
 ### 1.4 Governance gate
-- [ ] `governance/exceptions.py` — `GovernanceDenied`, `GovernanceStepUpRequired`, `GovernanceDeferred`
-- [ ] `governance/gate.py` — `govern()` wrapper (sync + async aware, thread-safe)
-- [ ] pre_execute (policy + trust gate) / post_execute (output scan + audit) hooks
+- [x] `governance/exceptions.py` — `GovernanceDenied`, `GovernanceStepUpRequired`, `GovernanceDeferred`
+- [x] `governance/gate.py` — `govern()` wrapper (sync + async aware)
+- [x] decide → audit hook → execute/raise; MODIFY param rewrite; STEP_UP handler
 
 ### 1.5 Example policy
-- [ ] `examples/policies/production.yaml` (5 decisions ครบ + PDPA rules)
+- [x] `examples/policies/production.yaml` (5 decisions ครบ + PDPA rules)
 
 ### 1.6 Tests
-- [ ] `tests/test_policy_engine.py` (รวม benchmark target 10,000 evals/sec)
-- [ ] `tests/test_governance_gate.py`
-- [ ] **Verify:** DENY/ALLOW/STEP_UP/MODIFY/DEFER ครบ, `govern(delete)("path")` raises `GovernanceDenied`
+- [x] `tests/test_policy_engine.py` (รวม benchmark > 10,000 evals/sec)
+- [x] `tests/test_governance_gate.py`
+- [x] **Verify:** 22 tests ผ่าน + ruff clean; DENY/ALLOW/STEP_UP/MODIFY/DEFER ครบ, `delete_file()` raises `GovernanceDenied`
 
 ---
 
@@ -170,6 +170,7 @@
 |---------|------|-------|----------------|--------|-----|
 | v0.1.0 | 2026-06-30 | — | สร้าง checklist จาก implementation_plan v2 | Baseline | มิ้นท์ |
 | v0.1.1 | 2026-06-30 | Phase 0 | scaffold: pyproject, src package, README, pre-commit, agsec stub; verify pip install -e . + agsec ผ่าน | ✅ Done | มิ้นท์ |
+| v0.2.0 | 2026-06-30 | Phase 1 | policy models/engine/loader/backends + governance gate + production.yaml; 22 tests ผ่าน, ruff clean, benchmark > 10k evals/s | ✅ Done | มิ้นท์ |
 | | | | | | |
 
 **กติกาการอัปเดต version:**

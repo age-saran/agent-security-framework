@@ -1,0 +1,91 @@
+apiVersion: governance.toolkit/v1
+name: production-enterprise
+version: "1.0"
+metadata:
+  compliance: ["soc2", "iso42001", "hipaa", "pdpa"]
+  environment: production
+
+defaults:
+  action: deny   # Fail-closed
+
+rules:
+  # === DESTRUCTIVE OPERATIONS ===
+  - name: block-destructive-ops
+    conditions:
+      - field: tool_name
+        operator: in
+        value: ["delete_file", "drop_table", "truncate", "shell_exec", "rm"]
+    action: deny
+    priority: 1000
+    description: "Destructive operations are structurally impossible"
+    tags: ["soc2-cc6.1"]
+
+  # === PII / PDPA PROTECTION ===
+  - name: pdpa-pii-detection
+    conditions:
+      - field: input_text
+        operator: matches
+        value: "\\b\\d{1}-\\d{4}-\\d{5}-\\d{2}-\\d{1}\\b"   # Thai National ID
+    action: deny
+    priority: 900
+    description: "Thai National ID detected — PDPA violation"
+    tags: ["pdpa", "hipaa"]
+
+  - name: pdpa-cross-border
+    conditions:
+      - field: tool_name
+        operator: equals
+        value: "transfer_data"
+      - field: destination.country
+        operator: not_equals
+        value: "TH"
+    action: step_up
+    priority: 850
+    approvers: ["dpo@company.com", "security-team"]
+    description: "Cross-border data transfer requires DPO approval (PDPA)"
+    tags: ["pdpa"]
+
+  # === HUMAN APPROVAL ===
+  - name: require-approval-financial
+    conditions:
+      - field: tool_name
+        operator: in
+        value: ["send_payment", "approve_invoice", "wire_transfer"]
+    action: step_up
+    priority: 800
+    approvers: ["finance-team", "cfo@company.com"]
+    description: "Financial operations require human approval"
+    tags: ["soc2-cc6.3"]
+
+  - name: require-approval-email
+    conditions:
+      - field: tool_name
+        operator: equals
+        value: "send_email"
+    action: step_up
+    priority: 700
+    approvers: ["manager"]
+    tags: ["soc2-cc6.1"]
+
+  # === RING-BASED ACCESS ===
+  - name: ring3-read-only
+    conditions:
+      - field: agent.ring
+        operator: equals
+        value: 3
+      - field: action.type
+        operator: not_in
+        value: ["read", "query", "search"]
+    action: deny
+    priority: 600
+    description: "Ring 3 (sandbox) agents are read-only"
+
+  # === SAFE OPERATIONS ===
+  - name: allow-read-operations
+    conditions:
+      - field: action.type
+        operator: in
+        value: ["read", "query", "search", "list", "get"]
+    action: allow
+    priority: 100
+    description: "Read operations are allowed"
