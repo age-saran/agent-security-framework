@@ -11,7 +11,7 @@
 |-------|-------|----------|--------|----------|
 | Phase 0 | Project scaffolding | 🔴 Must | ✅ Done | 100% |
 | Phase 1 | Policy Engine + Governance Gate | 🔴 Must | ✅ Done | 100% |
-| Phase 2 | Audit (Cosmos DB) + Compliance | 🔴 Must | ⬜ Not started | 0% |
+| Phase 2 | Audit (Cosmos DB) + Compliance | 🔴 Must | ✅ Done | 100% |
 | Phase 3 | Identity + Trust + Mesh + Subagent | 🔴 Must | ⬜ Not started | 0% |
 | Phase 4 | Human-in-the-Loop (Teams + Outlook) | 🟡 Important | ⬜ Not started | 0% |
 | Phase 5 | Runtime Sandbox + SRE | 🟡 Important | ⬜ Not started | 0% |
@@ -67,22 +67,22 @@
 ## Phase 2 — Audit & Compliance (Azure Cosmos DB)
 
 ### 2.1 Audit core
-- [ ] `audit/models.py` — `AuditEntry` (Merkle fields + partition_key)
-- [ ] `audit/logger.py` — `AuditLogger` (`log_decision`, `log_spawn`, `verify_integrity`, query)
-- [ ] `audit/sink.py` — `GovernanceEventSink` Protocol + `FileEventSink` + `CompositeEventSink`
-- [ ] `audit/cosmos_sink.py` — `CosmosEventSink` (production backend)
+- [x] `audit/models.py` — `AuditEntry` (Merkle fields + partition_key)
+- [x] `audit/logger.py` — `AuditLogger` (`log_decision`, `log_spawn`, `verify_integrity`, query)
+- [x] `audit/sink.py` — `GovernanceEventSink` Protocol + `FileEventSink` + `CompositeEventSink`
+- [x] `audit/cosmos_sink.py` — `CosmosEventSink` (production backend)
 
 ### 2.2 Compliance
-- [ ] `compliance/checker.py` — `ComplianceChecker`
-- [ ] `compliance/soc2.py` (CC6.1–CC9.1)
-- [ ] `compliance/iso42001.py`
-- [ ] `compliance/hipaa.py`
-- [ ] `compliance/pdpa.py` 🇹🇭 (consent, data localization, cross-border, DPO notify, erasure, 72h breach)
-- [ ] `compliance/evidence.py` — auditor evidence JSON
+- [x] `compliance/checker.py` — `ComplianceChecker`
+- [x] `compliance/soc2.py` (CC6.1–CC9.1)
+- [x] `compliance/iso42001.py`
+- [x] `compliance/hipaa.py`
+- [x] `compliance/pdpa.py` 🇹🇭 (consent, data localization, cross-border, DPO notify, erasure, 72h breach)
+- [x] `compliance/evidence.py` — auditor evidence JSON
 
 ### 2.3 Tests
-- [ ] `tests/test_audit_logger.py`, `test_cosmos_sink.py`, `test_pdpa_compliance.py`
-- [ ] **Verify:** write 1000 entries → `verify_integrity()==True`; tamper 1 → `False`
+- [x] `tests/test_audit_logger.py`, `test_cosmos_sink.py`, `test_pdpa_compliance.py`
+- [x] **Verify:** write 1000 entries → `verify_integrity()==True`; tamper 1 → `False`
 
 ---
 
@@ -171,6 +171,7 @@
 | v0.1.0 | 2026-06-30 | — | สร้าง checklist จาก implementation_plan v2 | Baseline | มิ้นท์ |
 | v0.1.1 | 2026-06-30 | Phase 0 | scaffold: pyproject, src package, README, pre-commit, agsec stub; verify pip install -e . + agsec ผ่าน | ✅ Done | มิ้นท์ |
 | v0.2.0 | 2026-06-30 | Phase 1 | policy models/engine/loader/backends + governance gate + production.yaml; 22 tests ผ่าน, ruff clean, benchmark > 10k evals/s | ✅ Done | มิ้นท์ |
+| v0.3.0 | 2026-07-01 | Phase 2 | audit Merkle-chain (File/InMemory/Cosmos sinks) + compliance checker (SOC2/ISO42001/HIPAA/PDPA) + evidence; wired into govern(); 35 tests ผ่าน, ruff clean | ✅ Done | มิ้นท์ |
 | | | | | | |
 
 **กติกาการอัปเดต version:**

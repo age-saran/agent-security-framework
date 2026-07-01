@@ -59,7 +59,7 @@ docs/                 # สถาปัตยกรรม + คู่มือ
 |-------|-------|--------|
 | 0 | Project scaffolding | ✅ |
 | 1 | Policy Engine + Governance Gate | ⬜ |
-| 2 | Audit (Cosmos DB) + Compliance | ⬜ |
+| 2 | Audit (Cosmos DB) + Compliance | ✅ |
 | 3 | Identity + Trust + Mesh | ⬜ |
 | 4 | Human-in-the-Loop (Teams/Outlook) | ⬜ |
 | 5 | Runtime Sandbox + SRE | ⬜ |
